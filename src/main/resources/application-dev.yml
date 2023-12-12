@@ -1,0 +1,12 @@
+# 공용 서버 정보
+
+spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: # 공용 mysql url 등록
+#    username: # 로컬 username
+#    password: # 로컬 password
+#  jpa:
+#    hibernate:
+#      ddl-auto: validate
+#    defer-datasource-initialization: true

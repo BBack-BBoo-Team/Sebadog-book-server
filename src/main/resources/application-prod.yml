@@ -1,0 +1,12 @@
+# 실제 운영 서버 정보
+
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url:
+#    username:
+#    password:
+#  jpa:
+#    hibernate:
+#      ddl-auto: validate
+#    defer-datasource-initialization: true

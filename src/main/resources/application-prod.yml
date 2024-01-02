@@ -10,3 +10,11 @@
 #    hibernate:
 #      ddl-auto: validate
 #    defer-datasource-initialization: true
+
+#logging:
+#  level:
+#    org:
+#      springframework:
+#        web: INFO
+#        orm:
+#          jpa: INFO

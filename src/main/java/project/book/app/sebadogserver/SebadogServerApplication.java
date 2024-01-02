@@ -13,7 +13,7 @@ public class SebadogServerApplication {
 
     @GetMapping("hello")
     public ResponseEntity hello() {
-        return ResponseEntity.ok("hello world");
+        return ResponseEntity.ok("hello world. we make sebadog-app");
     }
     public static void main(String[] args) {
         SpringApplication.run(SebadogServerApplication.class, args);

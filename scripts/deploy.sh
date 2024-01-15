@@ -4,7 +4,7 @@ REPOSITORY=/home/ubuntu/app
 
 echo "> 현재 구동 중인 애플리케이션 pid 확인"
 
-CURRENT_PID=$(pgrep -fla java | grep 8080 | awk '{print $1}')
+CURRENT_PID=$(sudo lsof -t -i:8080)
 
 echo "현재 구동 중인 애플리케이션 pid: $CURRENT_PID"
 

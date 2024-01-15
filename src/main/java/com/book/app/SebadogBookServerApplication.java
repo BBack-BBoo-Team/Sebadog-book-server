@@ -15,6 +15,6 @@ public class SebadogBookServerApplication {
 
 	@GetMapping("/test")
 	public String test() throws Exception {
-		return "Hello Test!";
+		return "안녕하세요 세바개 팀입니다. 독서 모임 관리 및 기록 앱 [세바독]을 기대해주세요.";
 	}
 }

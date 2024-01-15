@@ -59,7 +59,7 @@ jobs:
         aws-region: ap-northeast-2
 
     - name: Upload to S3
-      run: aws s3 cp --region ap-northeast-2 ./sebadog.zip s3://$S3_BUCKET_NAME/
+      run: aws s3 cp --region ap-northeast-2 ./sebadog.zip s3://sebadogapp-deploy/
 
     # Deploy
     - name: Deploy
@@ -67,4 +67,4 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
-        aws deploy create-deployment --application-name sebadog --deployment-group-name sebadog-group --file-exists-behavior OVERWRITE --s3-location bucket=$3_BUCKET_NAME,bundleType=zip,key=sebadog.zip --region ap-northeast-2
+        aws deploy create-deployment --application-name sebadog --deployment-group-name sebadog-group --file-exists-behavior OVERWRITE --s3-location bucket=sebadogapp-deploy,bundleType=zip,key=sebadog.zip --region ap-northeast-2

@@ -13,8 +13,8 @@ public class SebadogBookServerApplication {
 		SpringApplication.run(SebadogBookServerApplication.class, args);
 	}
 
-	@GetMapping("/test")
+	@GetMapping("/api-test")
 	public String test() throws Exception {
-		return "안녕하세요 세바개 팀입니다. 독서 모임 관리 및 기록 앱 [세바독]을 기대해주세요. \n 해당 API는 세바독 server 연동 테스트 API입니다.";
+		return "안녕하세요 세바개 팀입니다. 독서 모임 관리 및 기록 앱 [세바독]을 기대해주세요.";
 	}
 }

@@ -25,6 +25,5 @@ jobs:
       run: chmod +x gradlew
     
     - name: Build with Gradle
-      run: ./gradlew clean build
-      # 빌드 시 테스트 단계 Skip
-      # run: ./gradlew clean build -x test 
+      # run: ./gradlew clean build
+      run: ./gradlew clean build -x test # 테스트 Skip

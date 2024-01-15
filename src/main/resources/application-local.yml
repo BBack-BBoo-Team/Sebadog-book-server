@@ -1,3 +1,4 @@
+# 개인 개발 환경
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @SpringBootApplication
-public class SebadogBookServerApplication {
+public class SebadogApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SebadogBookServerApplication.class, args);
+		SpringApplication.run(SebadogApp.class, args);
 	}
 
 	@GetMapping("/api-test")

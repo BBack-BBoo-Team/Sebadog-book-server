@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Profile;
 
 @Profile("test")
 @SpringBootTest
-class SebadogBookServerApplicationTests {
+class SebadogAppTests {
 
 	@Test
 	void contextLoads() {

@@ -1,6 +1,7 @@
 package com.book.app.modules.books.controller;
 
-import com.book.app.modules.books.dto.BookDto;
+import com.book.app.modules.books.dto.BookRequestDto;
+import com.book.app.modules.books.dto.BookResponseDto;
 import com.book.app.modules.books.entity.Book;
 import com.book.app.modules.books.service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +22,12 @@ public class BookController {
      * 도서 추가
      */
     @PostMapping("/insertBook")
-    public ResponseEntity addBook(@RequestBody BookDto bookDto) {
+    public ResponseEntity addBook(@RequestBody BookRequestDto bookRequestDto) {
+        Book book = Book.toEntity(bookRequestDto);
+        Book saveBook = bookService.addBookInfo(book);
+        BookResponseDto response = Book.toResponseDto(saveBook);
 
-
-        return new ResponseEntity<>(new BookDto(), HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
 }

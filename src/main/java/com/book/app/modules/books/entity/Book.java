@@ -38,7 +38,7 @@ public class Book extends BaseTimeEntity {
     private Timestamp createDt;
 
     @Column(nullable = false)
-    private String createId;
+    private String createdBy;
 
     @Column(nullable = false)
     private String status;
@@ -52,7 +52,7 @@ public class Book extends BaseTimeEntity {
                 .author(dto.getAuthor())
                 .publisher(dto.getPublisher())
                 .bookImg(dto.getBookImg())
-                .createId(dto.getCreateId())
+                .createdBy(dto.getCreatedBy())
                 .status(dto.getStatus())
                 .build();
     }
@@ -64,7 +64,7 @@ public class Book extends BaseTimeEntity {
                 .author(book.getAuthor())
                 .publisher(book.getPublisher())
                 .bookImg(book.getBookImg())
-                .createId(book.getCreateId())
+                .createdBy(book.getCreatedBy())
                 .status(book.getStatus())
                 .createDt(book.getCreateDt())
                 .build();

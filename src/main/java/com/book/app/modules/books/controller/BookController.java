@@ -24,6 +24,7 @@ public class BookController {
      */
     @PostMapping("/insertBook")
     public ResponseEntity addBook(@RequestBody @Valid BookRequestDto bookRequestDto) {
+        // todo : valid 체크 예외 처리 코드 추가
         Book book = Book.toEntity(bookRequestDto);
         Book saveBook = bookService.addBookInfo(book);
         BookResponseDto response = Book.toResponseDto(saveBook);

@@ -2,8 +2,10 @@ package com.book.app.modules.books.entity;
 
 import com.book.app.modules.books.dto.BookRequestDto;
 import com.book.app.modules.books.dto.BookResponseDto;
+import com.book.app.modules.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Timestamp;
 
@@ -13,8 +15,10 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Book {
+public class Book extends BaseTimeEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private Long bookId;
 
     @Column(nullable = false)
@@ -29,7 +33,8 @@ public class Book {
     @Column(nullable = false)
     private String bookImg;
 
-    @Column
+    @Column(updatable = false)
+    @CreatedDate
     private Timestamp createDt;
 
     @Column(nullable = false)

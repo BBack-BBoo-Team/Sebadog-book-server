@@ -1,8 +1,8 @@
 package com.book.app.modules.books.dto;
 
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 public class BookRequestDto {
     private String bookTitle;
 

@@ -1,6 +1,10 @@
 package com.book.app.modules.account;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Table;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
@@ -27,7 +31,7 @@ public class Account {
 
     @CreatedDate
     @Column(name = "CREATED_DT", nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdDt;
 
     @Column(name = "PROFILE_IMG")
     private String profileImg;
@@ -55,4 +59,3 @@ public class Account {
         return Objects.hash(id);
     }
 }
-

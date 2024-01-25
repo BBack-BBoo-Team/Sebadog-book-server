@@ -63,5 +63,11 @@ public class Account {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    public String getProfileImg() {
+        return this.profileImg == null
+                ? ""
+                : this.profileImg;
+    }
 }
 

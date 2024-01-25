@@ -1,23 +1,32 @@
 package com.book.app.modules.account;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Getter
 @ToString
+@Getter
+@EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "ACCOUNT")
 @Entity
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ACCOUNT_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "UID", unique = true, updatable = false, nullable = false)
+    private String uid; // Supabase 제공
 
     @Column(name = "EMAIL", unique = true, nullable = false, length = 100)
     private String email;
@@ -25,22 +34,22 @@ public class Account {
     @Column(name = "NICKNAME", unique = true, nullable = false, length = 20)
     private String nickname;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @CreatedDate
-    @Column(name = "CREATED_DT", nullable = false)
-    private LocalDateTime createdDt;
+    @Column(name = "JOIN_AT", nullable = false, updatable = false)
+    private LocalDateTime joinAt;
 
     @Column(name = "PROFILE_IMG")
     private String profileImg;
 
-    protected Account() {}
-
-    private Account(String email, String nickname) {
+    private Account(String uid, String email, String nickname) {
+        this.uid = uid;
         this.email = email;
         this.nickname = nickname;
     }
 
-    public static Account of(String email, String nickname) {
-        return new Account(email, nickname);
+    public static Account of(String uid, String email, String nickname) {
+        return new Account(uid, email, nickname);
     }
 
     @Override
@@ -55,3 +64,4 @@ public class Account {
         return Objects.hash(id);
     }
 }
+

@@ -13,4 +13,10 @@ public interface AccountService {
      */
     Account saveSignUpInfo(Account account);
 
+    /**
+     * uid에 해당하는 사용자 정보 조회
+     * @param uid
+     * @return Account
+     */
+    Account getAccountByUid(String uid);
 }

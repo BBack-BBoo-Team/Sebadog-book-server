@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public class BaseTimeEntity {
     @CreatedDate
-    private LocalDateTime localDateTime;
+    private LocalDateTime createDt;
 
     @LastModifiedDate
-    private LocalDateTime modifiedDate;
+    private LocalDateTime finishDt;
 }

@@ -5,16 +5,12 @@ import com.book.app.modules.books.dto.BookResponseDto;
 import com.book.app.modules.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-
-import java.sql.Timestamp;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Book extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +18,7 @@ public class Book extends BaseTimeEntity {
     private Long bookId;
 
     @Column(nullable = false)
-    private String bookTitle;
+    private String title;
 
     @Column(nullable = false)
     private String author;
@@ -31,41 +27,44 @@ public class Book extends BaseTimeEntity {
     private String publisher;
 
     @Column(nullable = false)
-    private String bookImg;
-
-    @Column(updatable = false)
-    @CreatedDate
-    private Timestamp createDt;
+    private String img;
 
     @Column(nullable = false)
     private String createdBy;
 
     @Column(nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private BookStatus status;
 
-    @Column
-    private String finishDt;
 
-    public static Book toEntity(BookRequestDto dto) {
-        return Book.builder()
-                .bookTitle(dto.getBookTitle())
-                .author(dto.getAuthor())
-                .publisher(dto.getPublisher())
-                .bookImg(dto.getBookImg())
-                .createdBy(dto.getCreatedBy())
-                .status(dto.getStatus())
-                .build();
+    public enum BookStatus {
+        BEFORE_PROGRESS("진행예정"),
+        IN_PROGRESS("진행중"),
+        COMPLETED("진행완료");
+
+        private String description;
+
+        BookStatus(String description) {
+            this.description = description;
+        }
+
+        @Override
+        public String toString() {
+            return description;
+        }
+
     }
+
 
     public static BookResponseDto toResponseDto(Book book) {
         return BookResponseDto.builder()
                 .bookId(book.getBookId())
-                .bookTitle(book.getBookTitle())
+                .title(book.getTitle())
                 .author(book.getAuthor())
                 .publisher(book.getPublisher())
-                .bookImg(book.getBookImg())
+                .img(book.getImg())
                 .createdBy(book.getCreatedBy())
-                .status(book.getStatus())
+                .status(book.getStatus().toString())
                 .createDt(book.getCreateDt())
                 .build();
     }

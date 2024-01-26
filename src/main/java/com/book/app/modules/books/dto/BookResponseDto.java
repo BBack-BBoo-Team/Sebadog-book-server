@@ -1,20 +1,22 @@
 package com.book.app.modules.books.dto;
 
+import com.book.app.modules.books.entity.Book;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
-@Builder
 @Data
+@Builder
 public class BookResponseDto {
     private Long bookId;
-    private String bookTitle;
+    private String title;
     private String author;
     private String publisher;
-    private String bookImg;
+    private String img;
     private String status;
     private String createdBy;
-    private Timestamp createDt;
+    private LocalDateTime createDt;
 
 }

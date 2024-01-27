@@ -15,6 +15,8 @@ import org.hibernate.validator.constraints.Length;
  */
 @ToString
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SignUpDto {
 
     @NotBlank(message = "uid를 입력해주세요.")

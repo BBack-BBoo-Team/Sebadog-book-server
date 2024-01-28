@@ -25,7 +25,7 @@ class AccountControllerTest {
 
     @Autowired AccountService accountService;
 
-    final String url = "/accounts";
+    final String commonUrl = "/accounts";
 
     @DisplayName("회원가입 API 성공")
     @Test
@@ -33,7 +33,7 @@ class AccountControllerTest {
 
         SignUpDto request = new SignUpDto("test", "zzz@naver.com", "test");
 
-        mockMvc.perform(post(url+"/sign-up")
+        mockMvc.perform(post(commonUrl +"/sign-up")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(gson.toJson(request)))
@@ -53,7 +53,7 @@ class AccountControllerTest {
 
         SignUpDto request = new SignUpDto("second", "test22@naver.com", firstAccount.getNickname());
 
-        mockMvc.perform(post(url+"/sign-up")
+        mockMvc.perform(post(commonUrl +"/sign-up")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content(gson.toJson(request)))
@@ -68,7 +68,7 @@ class AccountControllerTest {
         Account expectAccount = accountService.saveSignUpInfo(
                 Account.of("first", "test@test.com", "test"));
 
-        mockMvc.perform(get(url+"/info/{uid}",expectAccount.getUid()))
+        mockMvc.perform(get(commonUrl +"/info/{uid}",expectAccount.getUid()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("success"))
                 .andExpect(jsonPath("$.domain").value("account"))
@@ -81,7 +81,7 @@ class AccountControllerTest {
     @DisplayName("사용자 조회 API 실패 - 존재하지 않는 UID")
     @Test
     void getInfoAccount_fail_notFoundAccount_byUid() throws Exception {
-        mockMvc.perform(get(url+"/info/{uid}","first"))
+        mockMvc.perform(get(commonUrl +"/info/{uid}","first"))
                 .andExpect(status().isNotFound());
     }
 }

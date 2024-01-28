@@ -4,19 +4,19 @@ import com.book.app.modules.account.Account;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 /**
  * 회원가입 데이터
+ * @uid : Supabase에서 제공하는 사용자 식별자
+ * @email : 로그인을 위한 이메일
+ * @nickname : 사용자 별칭
  */
 @ToString
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SignUpDto {
 
     @NotBlank(message = "uid를 입력해주세요.")

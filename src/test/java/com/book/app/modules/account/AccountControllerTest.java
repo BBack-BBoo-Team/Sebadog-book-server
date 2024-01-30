@@ -4,9 +4,12 @@ import com.book.app.infra.MockMvcTest;
 import com.book.app.modules.account.dto.SignUpDto;
 import com.book.app.modules.account.service.AccountService;
 import com.book.app.modules.global.exception.ErrorCode.AccountErrorCode;
+import com.book.app.modules.global.exception.ErrorCode.CommonErrorCode;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -58,6 +61,41 @@ class AccountControllerTest {
                 .andExpect(jsonPath("$.status").value("fail"))
                 .andExpect(jsonPath("$.errors.name").value(AccountErrorCode.DUPLICATED_NICKNAME.name()))
                 .andExpect(jsonPath("$.errors.message").value(AccountErrorCode.DUPLICATED_NICKNAME.getMessage()));
+    }
+
+    @DisplayName("[회원가입] 성공 - 닉네임은 2자 이상 20자 이하, 한글, 영어(대소), 숫자는 유효성 검증 성공")
+    @ParameterizedTest
+    @ValueSource(strings = {"2자", "20자되는닉네임입니다룰루랄라룰루랄라룰", "테스트", "hong", "이nyeosuk"})
+    void signUp_success_validate_nickname(String nickname) throws Exception {
+
+        SignUpDto request = new SignUpDto("uid", "test@email.com", nickname);
+
+        mockMvc.perform(post(commonUrl +"/sign-up")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(gson.toJson(request)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.status").value("success"))
+                .andExpect(jsonPath("$.data.uid").value(request.getUid()))
+                .andExpect(jsonPath("$.data.email").value(request.getEmail()))
+                .andExpect(jsonPath("$.data.nickname").value(request.getNickname()));
+    }
+
+    @DisplayName("[회원가입] 실패 - 닉네임은 2자 미만 20자 초과, 특수문자는 유효성 검증에서 실패")
+    @ParameterizedTest
+    @ValueSource(strings = {"1", "21자되는닉네임입니다룰루랄라룰루랄라룰루", "+!-@#"})
+    void signUp_fail_validate_nickname(String nickname) throws Exception {
+
+        SignUpDto request = new SignUpDto("uid", "test@email.com", nickname);
+
+        mockMvc.perform(post(commonUrl +"/sign-up")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(gson.toJson(request)))
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.status").value("fail"))
+                .andExpect(jsonPath("$.errors.name").value(CommonErrorCode.INVALID_VALIDATION.name()))
+                .andExpect(jsonPath("$.errors.message").value(CommonErrorCode.INVALID_VALIDATION.getMessage()));
     }
 
     @DisplayName("[사용자 조회] 성공")

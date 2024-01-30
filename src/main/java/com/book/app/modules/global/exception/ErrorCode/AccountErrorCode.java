@@ -14,7 +14,7 @@ public enum AccountErrorCode implements ErrorCode {
 
     // ACCOUNT
     UID_NOT_FOUND(HttpStatus.NOT_FOUND, "UID에 해당하는 사용자를 찾을 수 없습니다."),
-    DUPLICATED_NICKNAME(HttpStatus.BAD_REQUEST, "이미 존재하는 닉네임입니다.");
+    DUPLICATED_NICKNAME(HttpStatus.CONFLICT, "이미 존재하는 닉네임입니다.");
 
     private final Domain domain = Domain.account;
 

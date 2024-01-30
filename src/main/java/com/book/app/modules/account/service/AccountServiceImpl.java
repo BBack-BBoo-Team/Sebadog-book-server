@@ -2,12 +2,11 @@ package com.book.app.modules.account.service;
 
 import com.book.app.modules.account.Account;
 import com.book.app.modules.account.AccountRepository;
+import com.book.app.modules.global.exception.BusinessLogicException;
+import com.book.app.modules.global.exception.ErrorCode.AccountErrorCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -25,12 +24,13 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account getAccountByUid(String uid) {
-        return accountRepository.findByUid(uid).orElseThrow(() -> new NoSuchElementException("uid에 해당하는 사용자를 찾을 수 없습니다."));
+        return accountRepository.findByUid(uid)
+                .orElseThrow(() -> new BusinessLogicException(AccountErrorCode.UID_NOT_FOUND));
     }
 
     private void verifyExistsNickname(Account account) {
         accountRepository.findByNickname(account.getNickname()).ifPresent(e -> {
-            throw new IllegalArgumentException("중복된 닉네임입니다.");
+            throw new BusinessLogicException(AccountErrorCode.DUPLICATED_NICKNAME);
         });
     }
 }

@@ -13,3 +13,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+logging:
+  level:
+    com.book.app.modules : debug

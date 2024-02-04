@@ -14,3 +14,10 @@
 - 사용자 정보 조회
 
 ---
+
+### 2) BOOK API [[link](https://documenter.getpostman.com/view/21357078/2s9YsRc8w3)]
+
+- 회원가입
+- 사용자 정보 조회
+
+---

@@ -1,15 +1,17 @@
-# 공통 개발 환경
+server:
+  port: 8081
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${RDS_URL}
-    username: ${RDS_USERNAME}
-    password: ${RDS_PASSWORD}
+    url: jdbc:mysql://sebadog-database:3308/sebadog_dev_db # docker 이미지
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
 
   jpa:
     hibernate:
-      ddl-auto: create-drop # 추후 변경
+      ddl-auto: validate
     show-sql: true
     properties:
       hibernate:
-        format_sql: false
+        format_sql: true

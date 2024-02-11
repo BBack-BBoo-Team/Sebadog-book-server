@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+  sebadog-database:
+    container_name: sebadog-database
+    build:
+      dockerfile: Dockerfile
+      context: ./database
+    image: sebagae/sebadog-database
+    environment:
+      - MYSQL_DATABASE=sebadog_dev_db
+      - MYSQL_ROOT_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+    volumes:
+      - ./database/config:/etc/mysql/conf.d
+      - ./database/init:/docker-entrypoint-initdb.d
+    ports:
+      - "3308:3308"
+  sebadog-app:
+    container_name: sebadog-app
+    build: .
+    depends_on:
+      - sebadog-database
+    image: sebagae/sebadog-app
+    environment:
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+      - SPRING_PROFILES_ACTIVE=dev
+    ports:
+      - target: 8080      # 컨테이너 내부
+        published: 8081   # 노출 port
+        protocol: tcp
+    restart: always

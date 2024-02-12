@@ -1,7 +1,8 @@
 package com.book.app.modules.account;
 
 import com.book.app.infra.MockMvcTest;
-import com.book.app.modules.account.dto.SignUpDto;
+import com.book.app.modules.account.dto.AccountInfo;
+import com.book.app.modules.account.dto.SignUpInfo;
 import com.book.app.modules.account.service.AccountService;
 import com.book.app.modules.global.exception.ErrorCode.AccountErrorCode;
 import com.book.app.modules.global.exception.ErrorCode.CommonErrorCode;
@@ -34,7 +35,7 @@ class AccountControllerTest {
     @Test
     void signUp_success() throws Exception {
 
-        SignUpDto request = new SignUpDto("test", "test@test.com", "test");
+        SignUpInfo request = new SignUpInfo("uid", "test@email.com", "nickname");
 
         mockMvc.perform(post(commonUrl +"/sign-up")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -50,9 +51,11 @@ class AccountControllerTest {
     @DisplayName("[회원가입] 실패 - 중복 닉네임")
     @Test
     void signUp_fail_duplicated_nickname() throws Exception {
-        Account firstAccount = accountService.saveSignUpInfo(Account.of("first", "first@email.com", "first"));
-        SignUpDto request = new SignUpDto("second", "second@email.com", firstAccount.getNickname());
 
+        SignUpInfo firstRequest = new SignUpInfo("firstUid", "first@email.com", "firstNickname");
+        AccountInfo alreadyExist = accountService.saveSignUpInfo(firstRequest);
+
+        SignUpInfo request = new SignUpInfo("secUid", "second@email.com", alreadyExist.getNickname());
         mockMvc.perform(post(commonUrl +"/sign-up")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
@@ -68,7 +71,7 @@ class AccountControllerTest {
     @ValueSource(strings = {"2자", "20자되는닉네임입니다룰루랄라룰루랄라룰", "테스트", "hong", "이nyeosuk"})
     void signUp_success_validate_nickname(String nickname) throws Exception {
 
-        SignUpDto request = new SignUpDto("uid", "test@email.com", nickname);
+        SignUpInfo request = new SignUpInfo("uid", "test@email.com", nickname);
 
         mockMvc.perform(post(commonUrl +"/sign-up")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -86,7 +89,7 @@ class AccountControllerTest {
     @ValueSource(strings = {"1", "21자되는닉네임입니다룰루랄라룰루랄라룰루", "+!-@#"})
     void signUp_fail_validate_nickname(String nickname) throws Exception {
 
-        SignUpDto request = new SignUpDto("uid", "test@email.com", nickname);
+        SignUpInfo request = new SignUpInfo("uid", "test@email.com", nickname);
 
         mockMvc.perform(post(commonUrl +"/sign-up")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -101,8 +104,9 @@ class AccountControllerTest {
     @DisplayName("[사용자 조회] 성공")
     @Test
     void getInfoAccount_success() throws Exception {
-        Account expectAccount = accountService.saveSignUpInfo(
-                Account.of("first", "test@test.com", "test"));
+
+        SignUpInfo info = new SignUpInfo("uid", "test@email.com", "nickname");
+        AccountInfo expectAccount = accountService.saveSignUpInfo(info);
 
         mockMvc.perform(get(commonUrl +"/info/{uid}",expectAccount.getUid()))
                 .andExpect(status().isOk())

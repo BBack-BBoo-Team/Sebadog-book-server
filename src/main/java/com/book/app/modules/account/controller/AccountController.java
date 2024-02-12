@@ -1,8 +1,8 @@
 package com.book.app.modules.account.controller;
 
 import com.book.app.modules.account.Account;
-import com.book.app.modules.account.dto.AccountInfoDto;
-import com.book.app.modules.account.dto.SignUpDto;
+import com.book.app.modules.account.dto.AccountInfo;
+import com.book.app.modules.account.dto.SignUpInfo;
 import com.book.app.modules.account.service.AccountService;
 import com.book.app.modules.global.Domain;
 import com.book.app.modules.global.Response;
@@ -25,10 +25,10 @@ public class AccountController {
 
     // 사용자 정보 저장
     @PostMapping("/sign-up")
-    public ResponseEntity<Response> signUp(@RequestBody @Valid SignUpDto info) {
-        Account newAccount = accountService.saveSignUpInfo(info.toEntity());
+    public ResponseEntity<Response> signUp(@RequestBody @Valid SignUpInfo info) {
+        AccountInfo result = accountService.saveSignUpInfo(info);
         return new ResponseEntity<>(
-                Response.success(Domain.account, AccountInfoDto.from(newAccount)),
+                Response.success(Domain.account, result),
                 HttpStatus.CREATED);
     }
 
@@ -37,7 +37,7 @@ public class AccountController {
     public ResponseEntity<Response> getInfoAccount(@PathVariable("uid") String uid) {
         Account getAccount = accountService.getAccountByUid(uid);
         return new ResponseEntity<>(
-                Response.success(Domain.account, AccountInfoDto.from(getAccount)),
+                Response.success(Domain.account, AccountInfo.from(getAccount)),
                 HttpStatus.OK);
     }
 

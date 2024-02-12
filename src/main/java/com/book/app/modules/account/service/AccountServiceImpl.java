@@ -2,6 +2,8 @@ package com.book.app.modules.account.service;
 
 import com.book.app.modules.account.Account;
 import com.book.app.modules.account.AccountRepository;
+import com.book.app.modules.account.dto.AccountInfo;
+import com.book.app.modules.account.dto.SignUpInfo;
 import com.book.app.modules.global.exception.BusinessLogicException;
 import com.book.app.modules.global.exception.ErrorCode.AccountErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +19,10 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public Account saveSignUpInfo(Account account) {
-        verifyExistsNickname(account);
-        return accountRepository.save(account);
+    public AccountInfo saveSignUpInfo(SignUpInfo signUpInfo) {
+        Account newAccount = signUpInfo.toEntity();
+        verifyExistsNickname(newAccount);
+        return AccountInfo.from(accountRepository.save(newAccount));
     }
 
     @Override

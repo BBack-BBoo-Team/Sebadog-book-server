@@ -35,9 +35,9 @@ public class AccountController {
     // 사용자 정보 조회
     @GetMapping("/info/{uid}")
     public ResponseEntity<Response> getInfoAccount(@PathVariable("uid") String uid) {
-        Account getAccount = accountService.getAccountByUid(uid);
+        AccountInfo result = accountService.getAccountByUid(uid);
         return new ResponseEntity<>(
-                Response.success(Domain.account, AccountInfo.from(getAccount)),
+                Response.success(Domain.account, result),
                 HttpStatus.OK);
     }
 

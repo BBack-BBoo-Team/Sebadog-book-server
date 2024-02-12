@@ -1,6 +1,5 @@
 package com.book.app.modules.account.service;
 
-import com.book.app.modules.account.Account;
 import com.book.app.modules.account.dto.AccountInfo;
 import com.book.app.modules.account.dto.SignUpInfo;
 
@@ -17,8 +16,9 @@ public interface AccountService {
 
     /**
      * uid에 해당하는 사용자 정보 조회
+     *
      * @param uid
-     * @return Account
+     * @return AccountInfo - dto
      */
-    Account getAccountByUid(String uid);
+    AccountInfo getAccountByUid(String uid);
 }

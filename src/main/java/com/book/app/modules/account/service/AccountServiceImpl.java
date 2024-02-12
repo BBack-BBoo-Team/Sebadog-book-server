@@ -26,8 +26,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account getAccountByUid(String uid) {
+    public AccountInfo getAccountByUid(String uid) {
         return accountRepository.findByUid(uid)
+                .map(AccountInfo::from)
                 .orElseThrow(() -> new BusinessLogicException(AccountErrorCode.UID_NOT_FOUND));
     }
 

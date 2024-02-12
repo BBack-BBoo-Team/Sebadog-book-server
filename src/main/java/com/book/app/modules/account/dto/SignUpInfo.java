@@ -17,7 +17,7 @@ import org.hibernate.validator.constraints.Length;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SignUpDto {
+public class SignUpInfo {
 
     @NotBlank(message = "uid를 입력해주세요.")
     private String uid;

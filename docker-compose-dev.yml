@@ -5,7 +5,7 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./database
-    image: sebagae/sebadog-database
+    image: sebadog-database
     environment:
       - MYSQL_DATABASE=sebadog_dev_db
       - MYSQL_ROOT_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
@@ -19,7 +19,7 @@ services:
     build: .
     depends_on:
       - sebadog-database
-    image: sebagae/sebadog-app
+    image: sebadog-app
     environment:
       - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}

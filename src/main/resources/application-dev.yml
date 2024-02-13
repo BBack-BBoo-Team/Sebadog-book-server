@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://sebadog-database:3308/sebadog_dev_db # docker 이미지
+    url: jdbc:mysql://host.docker.internal:3308/sebadog_dev_db # docker 이미지
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
 

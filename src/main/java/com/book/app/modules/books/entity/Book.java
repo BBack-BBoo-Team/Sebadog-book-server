@@ -56,6 +56,15 @@ public class Book {
     @Enumerated(EnumType.STRING)
     private BookStatus status;
 
+    public Book(String title, String author, String publisher, String img, String createdBy, String status) {
+        this.title = title;
+        this.author = author;
+        this.publisher = publisher;
+        this.img = img;
+        this.createdBy = createdBy;
+        this.status = BookStatus.valueOf(status);
+    }
+
     public enum BookStatus {
         BEFORE_PROGRESS("진행예정"),
         IN_PROGRESS("진행중"),
@@ -85,5 +94,9 @@ public class Book {
                 .status(book.getStatus().toString())
                 .createDt(book.getCreatedDt())
                 .build();
+    }
+
+    public static Book of(String title, String author, String publisher, String img, String createdBy, String status) {
+        return new Book(title, author, publisher, img, createdBy, status);
     }
 }

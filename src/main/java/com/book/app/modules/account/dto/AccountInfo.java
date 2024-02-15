@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class AccountInfoDto {
+public class AccountInfo {
 
     private String uid;
     private String email;
@@ -30,8 +30,8 @@ public class AccountInfoDto {
     @JsonProperty("profile_img")
     private String profileImg;
 
-    public static AccountInfoDto from(Account account) {
-        return AccountInfoDto.builder()
+    public static AccountInfo from(Account account) {
+        return AccountInfo.builder()
                 .uid(account.getUid())
                 .email(account.getEmail())
                 .nickname(account.getNickname())

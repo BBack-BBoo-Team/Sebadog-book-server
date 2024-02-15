@@ -2,6 +2,7 @@ package com.book.app.modules.account.service;
 
 import com.book.app.modules.account.Account;
 import com.book.app.modules.account.AccountRepository;
+import com.book.app.modules.account.dto.SignUpInfo;
 import com.book.app.modules.global.exception.BusinessLogicException;
 import com.book.app.modules.global.exception.ErrorCode.AccountErrorCode;
 import org.junit.jupiter.api.Test;
@@ -29,19 +30,19 @@ class AccountServiceImplTest {
     @Test
     void 회원가입중_중복닉네임의_경우_BusinessLogicException_발생() {
         // 가정
-        Account initAccount = Account.of("test","test@test.com","2est");
-        given(accountRepository.findByNickname(anyString())).willReturn(Optional.of(initAccount));
+        Account alreadyExistAccount = Account.of("test","test@test.com","test");
+        given(accountRepository.findByNickname(anyString())).willReturn(Optional.of(alreadyExistAccount));
 
-        Account secondAccount = Account.of("test2", "test2@test.com", "test");
+        SignUpInfo secondSignUpInfo = new SignUpInfo("test2", "test2@test.com", alreadyExistAccount.getNickname());
 
         // 1) BusinessLogicException 발생 여부 체
         assertThatThrownBy(()->
-                accountService.saveSignUpInfo(secondAccount))
+                accountService.saveSignUpInfo(secondSignUpInfo))
                 .isInstanceOf(BusinessLogicException.class);
 
         // 2) 발생한 예외 상세 정보 적합성 체크
         BusinessLogicException expected = assertThrows(BusinessLogicException.class, () -> {
-            accountService.saveSignUpInfo(secondAccount);
+            accountService.saveSignUpInfo(secondSignUpInfo);
         });
         assertEquals(AccountErrorCode.DUPLICATED_NICKNAME, expected.getErrorCode());
     }

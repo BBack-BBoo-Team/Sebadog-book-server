@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.book.app.modules.books.dto.BookRequestDto.toEntity;
 
 @Slf4j
 @RestController
@@ -30,12 +29,11 @@ public class BookController {
      */
     @PostMapping("/add")
     public ResponseEntity addBook(@RequestBody @Valid BookRequestDto bookRequestDto) {
+
         // todo : valid 체크 예외 처리 코드 추가
-        log.info("book-add request = {}", bookRequestDto);
-        Book book = toEntity(bookRequestDto);
-        Book saveBook = bookService.addBookInfo(book);
+      
+        Book saveBook = bookService.addBookInfo(bookRequestDto);
         BookResponseDto response = Book.toResponseDto(saveBook);
-        log.info("book-add response = {}", response);
 
         return new ResponseEntity<>(Response.success(Domain.book, response),
                 HttpStatus.CREATED);

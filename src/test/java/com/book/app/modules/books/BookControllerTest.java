@@ -29,7 +29,7 @@ public class BookControllerTest {
         baseBook.setStatus(Book.BookStatus.IN_PROGRESS);
         baseBook.setCreatedBy("작성자");
 
-        Book book = baseBook.toEntity(baseBook);
+        Book book = baseBook.toEntity();
 
         //when
         Book response = bookRepository.save(book);

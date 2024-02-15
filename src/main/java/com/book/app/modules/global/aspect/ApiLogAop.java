@@ -20,20 +20,18 @@ public class ApiLogAop {
     public void before(JoinPoint joinPoint) {
         Signature signature = joinPoint.getSignature();
 
-        log.info("[START API] : {} - ({})",
-                signature.getName().toString(),
-                signature.getDeclaringTypeName());
+        log.info("======= [START API] {} =======",
+                signature.getName().toString());
 
-        // 메서드 정보 받아오기
-        Method method = getMethod(joinPoint);
-        log.info("======= {} ======= ", method.getName());
+        log.info("Controller = {}",
+                signature.getDeclaringTypeName());
 
         // 파라미터 받아오기
         Object[] args = joinPoint.getArgs();
         if (args.length <= 0) log.info("no parameter");
         for (Object arg : args) {
-            log.info("parameter type = {}", arg.getClass().getSimpleName());
-            log.info("parameter value = {}", arg);
+            log.info("Parameter type = {}", arg.getClass().getSimpleName());
+            log.info("Parameter value = {}", arg);
         }
     }
 
@@ -67,8 +65,8 @@ public class ApiLogAop {
     public void afterReturnLog(JoinPoint joinPoint, Object returnObj) {
         Method method = getMethod(joinPoint);
         log.info("======= [END API] {} =======", method.getName());
-        log.info("return type = {}", returnObj.getClass().getSimpleName());
-        log.info("return value = {}", returnObj);
+        log.info("Return type = {}", returnObj.getClass().getSimpleName());
+        log.info("Return value = {}", returnObj);
     }
 
     // API 메서드 정보 가져오기

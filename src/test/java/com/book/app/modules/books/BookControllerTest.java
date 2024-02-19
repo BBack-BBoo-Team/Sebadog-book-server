@@ -1,7 +1,8 @@
 package com.book.app.modules.books;
 
-import com.book.app.modules.books.dto.BookRequestDto;
+import com.book.app.modules.books.dto.BookAddRequest;
 import com.book.app.modules.books.entity.Book;
+import com.book.app.modules.books.entity.BookStatus;
 import com.book.app.modules.books.repository.BookRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -21,12 +22,12 @@ public class BookControllerTest {
     @DisplayName("도서 등록 테스트")
     public void insertBookTest() {
         //given
-        BookRequestDto baseBook = new BookRequestDto();
+        BookAddRequest baseBook = new BookAddRequest();
         baseBook.setTitle("책 제목");
         baseBook.setImg("이미지경로");
         baseBook.setAuthor("저자");
         baseBook.setPublisher("출판사");
-        baseBook.setStatus(Book.BookStatus.IN_PROGRESS);
+        baseBook.setStatus("진행예정");
         baseBook.setCreatedBy("작성자");
 
         Book book = baseBook.toEntity();
@@ -40,7 +41,7 @@ public class BookControllerTest {
                 () -> Assertions.assertEquals("이미지경로", response.getImg()),
                 () -> Assertions.assertEquals("저자", response.getAuthor()),
                 () -> Assertions.assertEquals("출판사", response.getPublisher()),
-                () -> Assertions.assertEquals(Book.BookStatus.IN_PROGRESS, response.getStatus()),
+                () -> Assertions.assertEquals(BookStatus.IN_PROGRESS, response.getStatus()),
                 () -> Assertions.assertEquals("작성자", response.getCreatedBy()),
                 () -> Assertions.assertFalse(response.getBookId().describeConstable().isEmpty())
         );

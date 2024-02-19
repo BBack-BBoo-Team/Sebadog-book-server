@@ -1,9 +1,7 @@
 package com.book.app.modules.books.entity;
 
-import com.book.app.modules.books.dto.BookResponseDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -14,10 +12,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Builder
 @EntityListeners(AuditingEntityListener.class)
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "BOOK")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +34,9 @@ public class Book {
     @Column(nullable = false)
     private String img;
 
-    @CreatedDate private LocalDateTime createdDt;
+    @CreatedDate
+    @Column(name="create_dt")
+    private LocalDateTime createdDt;
 
     @Column(nullable = false)
     private String createdBy;
@@ -56,47 +56,17 @@ public class Book {
     @Enumerated(EnumType.STRING)
     private BookStatus status;
 
-    public Book(String title, String author, String publisher, String img, String createdBy, String status) {
+    public Book(String title, String author, String publisher, String img, String createdBy, BookStatus status) {
         this.title = title;
         this.author = author;
         this.publisher = publisher;
         this.img = img;
         this.createdBy = createdBy;
-        this.status = BookStatus.valueOf(status);
-    }
-
-    public enum BookStatus {
-        BEFORE_PROGRESS("진행예정"),
-        IN_PROGRESS("진행중"),
-        COMPLETED("진행완료");
-
-        private String description;
-
-        BookStatus(String description) {
-            this.description = description;
-        }
-
-        @Override
-        public String toString() {
-            return description;
-        }
+        this.status = status;
     }
 
 
-    public static BookResponseDto toResponseDto(Book book) {
-        return BookResponseDto.builder()
-                .bookId(book.getBookId())
-                .title(book.getTitle())
-                .author(book.getAuthor())
-                .publisher(book.getPublisher())
-                .img(book.getImg())
-                .createdBy(book.getCreatedBy())
-                .status(book.getStatus().toString())
-                .createDt(book.getCreatedDt())
-                .build();
-    }
-
-    public static Book of(String title, String author, String publisher, String img, String createdBy, String status) {
+    public static Book of(String title, String author, String publisher, String img, String createdBy, BookStatus status) {
         return new Book(title, author, publisher, img, createdBy, status);
     }
 }

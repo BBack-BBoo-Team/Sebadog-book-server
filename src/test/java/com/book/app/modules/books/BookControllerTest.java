@@ -2,7 +2,9 @@ package com.book.app.modules.books;
 
 import com.book.app.infra.MockMvcTest;
 import com.book.app.modules.books.dto.BookAddRequest;
+import com.book.app.modules.books.dto.BookAddResponse;
 import com.book.app.modules.books.service.BookService;
+import com.book.app.modules.global.exception.ErrorCode.AccountErrorCode;
 import com.book.app.modules.global.exception.ErrorCode.BookErrorCode;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -55,9 +58,9 @@ public class BookControllerTest {
                         .andExpect(jsonPath("$.data.createdBy").value(request.getCreatedBy()));
     }
 
-    @DisplayName("[도서 등록] 실패 - 존재하지 않는 도서 진행 상태")
+    @DisplayName("[도서 등록] 실패 - 존재하지 않는 도서 진행 상태 입력")
     @Test
-    void addBooks_fail_not_found_status() throws Exception {
+    void addBooks_fail_badRequest_status() throws Exception {
 
         BookAddRequest request = new BookAddRequest();
         request.setTitle("책 제목");
@@ -78,4 +81,36 @@ public class BookControllerTest {
     }
 
 
+    @DisplayName("[도서 상세 조회] 성공")
+    @Test
+    void getBookDetail_success() throws Exception {
+        BookAddRequest request = new BookAddRequest();
+        request.setTitle("책 제목");
+        request.setImg("이미지경로");
+        request.setAuthor("저자");
+        request.setPublisher("출판사");
+        request.setStatus("진행예정");
+        request.setCreatedBy("작성자");
+        BookAddResponse response = bookService.addBookInfo(request);
+
+        mockMvc.perform(get(commonUrl + "/details/{id}", response.getBookId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("success"))
+                .andExpect(jsonPath("$.data.title").value(response.getTitle()))
+                .andExpect(jsonPath("$.data.author").value(response.getAuthor()))
+                .andExpect(jsonPath("$.data.img").value(response.getImg()))
+                .andExpect(jsonPath("$.data.publisher").value(response.getPublisher()))
+                .andExpect(jsonPath("$.data.status").value(response.getStatus()))
+                .andExpect(jsonPath("$.data.createdBy").value(response.getCreatedBy()));
+    }
+
+    @DisplayName("[도서 상세 조회] 실패 - 존재하지 않는 도서 ID")
+    @Test
+    void getBookDetail_fail_notFound() throws Exception {
+        mockMvc.perform(get(commonUrl + "/details/{id}", "1"))
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.status").value("fail"))
+                .andExpect(jsonPath("$.errors.name").value(BookErrorCode.BOOK_ID_NOT_FOUND.name()))
+                .andExpect(jsonPath("$.errors.message").value(BookErrorCode.BOOK_ID_NOT_FOUND.getMessage()));
+    }
 }

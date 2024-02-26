@@ -23,7 +23,7 @@ public class BookAddRequest {
     @NotBlank(message = "도서 상태를 선택해주세요.")
     private String status;
 
-    @JsonProperty("created_by")
+    @JsonProperty("createdBy")
     private String createdBy;
 
     public Book toEntity() {

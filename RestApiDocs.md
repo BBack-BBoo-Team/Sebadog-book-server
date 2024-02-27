@@ -15,8 +15,9 @@
 
 ---
 
-### 2) BOOK API [[link](https://documenter.getpostman.com/view/21357078/2s9YsRc8w3)]
+### 2) BOOK API [[link](https://documenter.getpostman.com/view/21357078/2sA2r82jFg)]
 
 - 도서 등록
+- 도서 정보 상세 조회
 
 ---

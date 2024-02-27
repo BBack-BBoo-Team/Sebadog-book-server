@@ -9,9 +9,6 @@ services:
     environment:
       - MYSQL_DATABASE=sebadog_dev_db
       - MYSQL_ROOT_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
-    volumes:
-      - ./database/config:/etc/mysql/conf.d
-      - ./database/init:/docker-entrypoint-initdb.d
     ports:
       - "3308:3308"
   sebadog-app:

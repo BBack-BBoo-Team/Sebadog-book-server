@@ -35,13 +35,15 @@ public class Book {
     private String img;
 
     @CreatedDate
-    @Column(name="create_dt")
-    private LocalDateTime createdDt;
+    @Column(name="CREATE_DT")
+    private LocalDateTime createDt;
 
-    @Column(nullable = false)
+    @Column(name="CREATED_BY", nullable = false)
     private String createdBy;
 
-    @LastModifiedDate private LocalDateTime updatedDt;
+    @LastModifiedDate
+    @Column(name="UPDATED_DT")
+    private LocalDateTime updatedDt;
 
     /**
      * @Name: finishDt

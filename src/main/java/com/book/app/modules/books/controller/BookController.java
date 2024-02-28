@@ -29,7 +29,7 @@ public class BookController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity addBook(@RequestBody @Validated BookAddRequest bookAddRequest) {
+    public ResponseEntity addBook(@RequestBody @Valid BookAddRequest bookAddRequest) {
         BookAddResponse result = bookService.addBookInfo(bookAddRequest);
         return new ResponseEntity<>(Response.success(Domain.book, result),
                 HttpStatus.CREATED);

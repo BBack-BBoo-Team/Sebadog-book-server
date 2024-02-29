@@ -1,6 +1,7 @@
 package com.book.app.modules.books.dto;
 
 import com.book.app.modules.books.entity.Book;
+import com.book.app.modules.books.entity.BookStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class BookAddResponse {
+public class BookInfo {
     @JsonProperty("book_id")
     private Long bookId;
     private String title;
@@ -22,14 +23,14 @@ public class BookAddResponse {
     @JsonProperty("create_dt")
     private LocalDateTime createDt;
 
-    public static BookAddResponse toResponse(Book book) {
-        return BookAddResponse.builder()
+    public static BookInfo toResponse(Book book) {
+        return BookInfo.builder()
                 .bookId(book.getBookId())
                 .img(book.getImg())
                 .title(book.getTitle())
                 .author(book.getAuthor())
                 .publisher(book.getPublisher())
-                .status(book.getStatus().getStatus())
+                .status(String.valueOf(book.getStatus()))
                 .createdBy(book.getCreatedBy())
                 .createDt(book.getCreateDt())
                 .build();

@@ -3,7 +3,6 @@ package com.book.app.modules.books.dto;
 import com.book.app.modules.books.entity.Book;
 import com.book.app.modules.books.entity.BookStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -11,7 +10,7 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookAddRequest {
+public class SaveBook {
     @NotBlank(message = "도서 제목을 입력해주세요.")
     private String title;
 

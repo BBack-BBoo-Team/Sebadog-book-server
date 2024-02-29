@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
 @EntityListeners(AuditingEntityListener.class)
 @AllArgsConstructor
 @NoArgsConstructor
@@ -66,7 +68,6 @@ public class Book {
         this.createdBy = createdBy;
         this.status = status;
     }
-
 
     public static Book of(String title, String author, String publisher, String img, String createdBy, BookStatus status) {
         return new Book(title, author, publisher, img, createdBy, status);

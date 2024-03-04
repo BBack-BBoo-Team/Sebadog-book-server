@@ -24,5 +24,9 @@ public enum BookStatus {
         }
         throw new IllegalArgumentException(text);
     }
+
+    public static String fromCode(BookStatus status) {
+        return status.status;
+    }
 }
 

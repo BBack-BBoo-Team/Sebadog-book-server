@@ -1,7 +1,9 @@
 package com.book.app.modules.books.controller;
 
-import com.book.app.modules.books.dto.SaveBook;
 import com.book.app.modules.books.dto.BookInfo;
+import com.book.app.modules.books.dto.SaveBook;
+import com.book.app.modules.books.dto.SaveBookInfo;
+import com.book.app.modules.books.dto.UpdateBookInfo;
 import com.book.app.modules.books.service.BookService;
 import com.book.app.modules.global.Domain;
 import com.book.app.modules.global.Response;
@@ -32,7 +34,7 @@ public class BookController {
      */
     @PostMapping("/add")
     public ResponseEntity addBook(@RequestBody @Valid SaveBook saveBook) {
-        BookInfo result = bookService.addBookInfo(saveBook);
+        SaveBookInfo result = bookService.addBookInfo(saveBook);
         return new ResponseEntity<>(Response.success(Domain.book, result),
                 HttpStatus.CREATED);
     }
@@ -56,8 +58,8 @@ public class BookController {
      * @return
      */
     @PostMapping("/update/{id}")
-    public ResponseEntity updateBookInfo(@RequestBody @Valid BookInfo updateBook, @PathVariable("id") Long bookId) {
-        BookInfo result = bookService.updateBookInfo(updateBook, bookId);
+    public ResponseEntity updateBookInfo(@RequestBody @Valid UpdateBookInfo updateBook, @PathVariable("id") Long bookId) {
+        UpdateBookInfo result = bookService.updateBookInfo(updateBook, bookId);
         return new ResponseEntity<>(Response.success(Domain.book, result),
                 HttpStatus.OK);
     }

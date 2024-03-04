@@ -12,7 +12,7 @@ import static com.book.app.modules.books.entity.BookStatus.fromCode;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BookInfo {
+public class UpdateBookInfo {
     @JsonProperty("book_id")
     private Long bookId;
     private String title;
@@ -22,14 +22,12 @@ public class BookInfo {
     private String status;
     @JsonProperty("created_by")
     private String createdBy;
-    @JsonProperty("create_dt")
-    private LocalDateTime createDt;
 
     @JsonProperty("update_dt")
     private LocalDateTime updateDt;
 
-    public static BookInfo toDetailResponse(Book book) {
-        return BookInfo.builder()
+    public static UpdateBookInfo toUpdateResponse(Book book) {
+        return UpdateBookInfo.builder()
                 .bookId(book.getBookId())
                 .img(book.getImg())
                 .title(book.getTitle())
@@ -37,7 +35,6 @@ public class BookInfo {
                 .publisher(book.getPublisher())
                 .status(fromCode(book.getStatus()))
                 .createdBy(book.getCreatedBy())
-                .createDt(book.getCreateDt())
                 .updateDt(book.getUpdateDt())
                 .build();
     }

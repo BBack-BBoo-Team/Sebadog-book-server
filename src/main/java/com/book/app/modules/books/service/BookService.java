@@ -1,7 +1,9 @@
 package com.book.app.modules.books.service;
 
-import com.book.app.modules.books.dto.SaveBook;
 import com.book.app.modules.books.dto.BookInfo;
+import com.book.app.modules.books.dto.SaveBook;
+import com.book.app.modules.books.dto.SaveBookInfo;
+import com.book.app.modules.books.dto.UpdateBookInfo;
 import jakarta.validation.Valid;
 
 public interface BookService {
@@ -11,7 +13,7 @@ public interface BookService {
      * @param book
      * @return
      */
-    BookInfo addBookInfo(@Valid SaveBook book);
+    SaveBookInfo addBookInfo(@Valid SaveBook book);
 
     /**
      * 도서 상세 정보 조회
@@ -23,11 +25,11 @@ public interface BookService {
     /**
      * 도서 정보 수정
      *
-     * @param updateBook
+     * @param updateBookInfo
      * @param bookId
      * @return
      */
-    BookInfo updateBookInfo(@Valid BookInfo updateBook, Long bookId);
+    UpdateBookInfo updateBookInfo(@Valid UpdateBookInfo updateBookInfo, Long bookId);
 
     /**
      * 도서 정보 삭제

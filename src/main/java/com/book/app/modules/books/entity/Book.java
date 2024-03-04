@@ -1,5 +1,6 @@
 package com.book.app.modules.books.entity;
 
+import com.book.app.modules.books.dto.UpdateBookInfo;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,8 +45,8 @@ public class Book {
     private String createdBy;
 
     @LastModifiedDate
-    @Column(name="UPDATED_DT")
-    private LocalDateTime updatedDt;
+    @Column(name="UPDATE_DT")
+    private LocalDateTime updateDt;
 
     /**
      * @Name: finishDt
@@ -71,5 +72,14 @@ public class Book {
 
     public static Book of(String title, String author, String publisher, String img, String createdBy, BookStatus status) {
         return new Book(title, author, publisher, img, createdBy, status);
+    }
+
+    public void updateBook(UpdateBookInfo book) {
+        this.title = book.getTitle();
+        this.author = book.getAuthor();
+        this.publisher = book.getPublisher();
+        this.img = book.getImg();
+        this.createdBy = book.getCreatedBy();
+        this.status = BookStatus.fromString(book.getStatus());
     }
 }

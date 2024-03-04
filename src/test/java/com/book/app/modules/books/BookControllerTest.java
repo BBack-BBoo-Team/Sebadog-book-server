@@ -2,8 +2,7 @@ package com.book.app.modules.books;
 
 import com.book.app.infra.MockMvcTest;
 import com.book.app.modules.books.dto.SaveBook;
-import com.book.app.modules.books.dto.BookInfo;
-import com.book.app.modules.books.entity.BookStatus;
+import com.book.app.modules.books.dto.SaveBookInfo;
 import com.book.app.modules.books.service.BookService;
 import com.book.app.modules.global.exception.ErrorCode.BookErrorCode;
 import com.google.gson.Gson;
@@ -71,7 +70,7 @@ public class BookControllerTest {
     @Test
     void getBookDetail_success() throws Exception {
         SaveBook request = new SaveBook("책 제목", "저자", "출판사","이미지","진행예정", "작성자");
-        BookInfo response = bookService.addBookInfo(request);
+        SaveBookInfo response = bookService.addBookInfo(request);
 
         mockMvc.perform(get(commonUrl + "/details/{id}", response.getBookId()))
                 .andExpect(status().isOk())

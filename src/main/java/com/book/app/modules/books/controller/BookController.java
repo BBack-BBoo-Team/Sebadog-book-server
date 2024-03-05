@@ -1,9 +1,6 @@
 package com.book.app.modules.books.controller;
 
-import com.book.app.modules.books.dto.BookInfo;
-import com.book.app.modules.books.dto.SaveBook;
-import com.book.app.modules.books.dto.SaveBookInfo;
-import com.book.app.modules.books.dto.UpdateBookInfo;
+import com.book.app.modules.books.dto.*;
 import com.book.app.modules.books.service.BookService;
 import com.book.app.modules.global.Domain;
 import com.book.app.modules.global.Response;
@@ -13,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 
 @Slf4j
@@ -74,5 +74,30 @@ public class BookController {
         bookService.deleteBookInfo(bookId);
         return new ResponseEntity<>(Response.success(Domain.book),
                 HttpStatus.NO_CONTENT);
+    }
+
+
+    /**
+     * 도서 목록 전체 조회
+     * @return
+     */
+    @GetMapping("/listAll")
+    public ResponseEntity getBookListAll() {
+        List<BookInfo> bookList = bookService.getBookListAll();
+        return new ResponseEntity<>(
+                Response.success(Domain.book, bookList),
+                HttpStatus.OK);
+    }
+
+    /**
+     * 도서 목록 전체 조회 > 검색 조건 추가
+     * @return
+     */
+    @GetMapping("/list")
+    public ResponseEntity getBookList(@RequestBody Map<String, String> status) {
+        List<BookInfo> bookList = bookService.getBookList(status);
+        return new ResponseEntity<>(
+                Response.success(Domain.book, bookList),
+                HttpStatus.OK);
     }
 }

@@ -1,10 +1,10 @@
 package com.book.app.modules.books.service;
 
-import com.book.app.modules.books.dto.BookInfo;
-import com.book.app.modules.books.dto.SaveBook;
-import com.book.app.modules.books.dto.SaveBookInfo;
-import com.book.app.modules.books.dto.UpdateBookInfo;
+import com.book.app.modules.books.dto.*;
 import jakarta.validation.Valid;
+
+import java.util.List;
+import java.util.Map;
 
 public interface BookService {
 
@@ -37,4 +37,17 @@ public interface BookService {
      * @param bookId
      */
     void deleteBookInfo(Long bookId);
+
+    /**
+     * 도서 목록 전체 조회
+     * @return
+     */
+    List<BookInfo> getBookListAll();
+
+    /**
+     * 도서 목록 전체 조회 > 검색 조건 추가
+     * @param requestDto
+     * @return
+     */
+    List<BookInfo> getBookList(Map<String, String> requestDto);
 }

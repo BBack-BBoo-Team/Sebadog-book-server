@@ -42,19 +42,6 @@ public class GlobalExceptionAdvice {
     }
 
     /**
-     *  INTERNAL_SERVER_ERROR(500) 핸들러
-     */
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler
-    public ResponseEntity<Response> handleBusinessLogicException(Exception e) {
-        CommonErrorCode error = CommonErrorCode.INTERNAL_SERVER_ERROR;
-        final ErrorResponse response = ErrorResponse.of(error, null, null);
-        log.error("[{}] {} ", error.name(), error.getMessage());
-        log.error("CAUSE : {}", e.getMessage());
-        return new ResponseEntity<>(Response.fail(response), error.getHttpStatus());
-    }
-
-    /**
      * 유효성 검증 에러 핸들러
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)

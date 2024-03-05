@@ -36,6 +36,14 @@ public class Response {
                 .build();
     }
 
+    public static Response success(Domain domain) {
+        return Response.builder()
+                .status(Status.success)
+                .domain(domain)
+                .res_time(LocalDateTime.now())
+                .build();
+    }
+
     public static Response fail(Domain domain, Object error) {
         return Response.builder()
                 .status(Status.fail)

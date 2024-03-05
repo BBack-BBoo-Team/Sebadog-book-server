@@ -1,33 +1,41 @@
 package com.book.app.modules.books.dto;
 
 import com.book.app.modules.books.entity.Book;
-import lombok.Builder;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+import static com.book.app.modules.books.entity.BookStatus.fromCode;
+
+@Getter
 @Builder
-public class BookAddResponse {
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class UpdateBookInfo {
+    @JsonProperty("book_id")
     private Long bookId;
     private String title;
     private String author;
     private String publisher;
     private String img;
     private String status;
+    @JsonProperty("created_by")
     private String createdBy;
-    private LocalDateTime createDt;
 
-    public static BookAddResponse toResponse(Book book) {
-        return BookAddResponse.builder()
+    @JsonProperty("update_dt")
+    private LocalDateTime updateDt;
+
+    public static UpdateBookInfo toUpdateResponse(Book book) {
+        return UpdateBookInfo.builder()
                 .bookId(book.getBookId())
                 .img(book.getImg())
                 .title(book.getTitle())
                 .author(book.getAuthor())
                 .publisher(book.getPublisher())
-                .status(book.getStatus().getStatus())
+                .status(fromCode(book.getStatus()))
                 .createdBy(book.getCreatedBy())
-                .createDt(book.getCreatedDt())
+                .updateDt(book.getUpdateDt())
                 .build();
     }
 }

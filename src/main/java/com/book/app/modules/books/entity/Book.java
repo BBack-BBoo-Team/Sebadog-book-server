@@ -1,9 +1,11 @@
 package com.book.app.modules.books.entity;
 
+import com.book.app.modules.books.dto.UpdateBookInfo;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -12,6 +14,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
 @EntityListeners(AuditingEntityListener.class)
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,13 +38,15 @@ public class Book {
     private String img;
 
     @CreatedDate
-    @Column(name="create_dt")
-    private LocalDateTime createdDt;
+    @Column(name="CREATE_DT")
+    private LocalDateTime createDt;
 
-    @Column(nullable = false)
+    @Column(name="CREATED_BY", nullable = false)
     private String createdBy;
 
-    @LastModifiedDate private LocalDateTime updatedDt;
+    @LastModifiedDate
+    @Column(name="UPDATE_DT")
+    private LocalDateTime updateDt;
 
     /**
      * @Name: finishDt
@@ -65,8 +70,16 @@ public class Book {
         this.status = status;
     }
 
-
     public static Book of(String title, String author, String publisher, String img, String createdBy, BookStatus status) {
         return new Book(title, author, publisher, img, createdBy, status);
+    }
+
+    public void updateBook(UpdateBookInfo book) {
+        this.title = book.getTitle();
+        this.author = book.getAuthor();
+        this.publisher = book.getPublisher();
+        this.img = book.getImg();
+        this.createdBy = book.getCreatedBy();
+        this.status = BookStatus.fromString(book.getStatus());
     }
 }

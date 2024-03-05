@@ -4,10 +4,13 @@ import com.book.app.modules.books.entity.Book;
 import com.book.app.modules.books.entity.BookStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+import lombok.*;
 
-@Data
-public class BookAddRequest {
+@ToString
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+public class SaveBook {
     @NotBlank(message = "도서 제목을 입력해주세요.")
     private String title;
 
@@ -23,10 +26,10 @@ public class BookAddRequest {
     @NotBlank(message = "도서 상태를 선택해주세요.")
     private String status;
 
-    @JsonProperty("createdBy")
-    private String createdBy;
+    @JsonProperty("created_by")
+    private String created_by;
 
     public Book toEntity() {
-        return Book.of(this.title, this.author, this.publisher, this.img, this.createdBy, BookStatus.fromString(this.status));
+        return Book.of(this.title, this.author, this.publisher, this.img, this.created_by, BookStatus.fromString(this.status));
     }
 }
